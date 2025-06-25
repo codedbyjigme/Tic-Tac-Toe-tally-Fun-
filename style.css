@@ -1,0 +1,109 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f0f0f0;
+}
+
+h1 {
+    color: #2A2A7B;
+    margin: 0;
+    padding: 0;
+}
+
+#gameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+}
+
+#gameScreen{
+    display: flex;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#turnInfo {
+    margin: 20px;
+    font-size: 20px;
+    color: #6B6B9F;
+    
+}
+
+#gameBoard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+    background-color: #40E7E7;
+    width: 600px;
+    height: 600px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.outer-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.inner-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    width: 90%;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.inner-board.won::after {
+    content: attr(data-winner);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
+    color: #2A2A7B;
+    z-index: 2;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+
+.outer-cell:hover{
+    background: #d5f7f7;
+}
+
+.inner-cell {
+    background: #fff;
+    border: 1px solid #2A2A7B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2vw; /* or a relative unit */
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.inner-cell:hover {
+    background: #d5f7f7;
+}
+

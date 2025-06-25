@@ -9,9 +9,10 @@ body {
 }
 
 h1 {
-    color: #2A2A7B;
+    color: #40E7E7;
     margin: 0;
     padding: 0;
+    font-size: 4rem;
 }
 
 #gameContainer {
@@ -30,9 +31,21 @@ h1 {
 
 #turnInfo {
     margin: 20px;
-    font-size: 20px;
-    color: #6B6B9F;
+    font-size: 3rem;
+    color: #333333;
     
+}
+
+.playerScore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #DC143C;
+}
+
+#player1Score, #player2Score {
+    margin: 0 10px;
 }
 
 #gameBoard {

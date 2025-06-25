@@ -1,5 +1,7 @@
 const gameBoard = document.getElementById("gameBoard");
 const playerTurn = document.getElementById("turnInfo");
+const player1Score = document.getElementById("player1Score");
+const player2Score = document.getElementById("player2Score");
 let currentPlayer = "X";
 
     // Create 3x3 Outer Grid
@@ -23,7 +25,7 @@ let currentPlayer = "X";
           checkInnerBoardWin(innerBoard);
           currentPlayer = currentPlayer === "X" ? "O" : "X";
           playerTurn.textContent = currentPlayer === "X" ? "Player 1's turn" : "Player 2's turn"; 
-          innerCell.removeEventListener("click");
+          
         });
 
         
@@ -57,6 +59,44 @@ let currentPlayer = "X";
       }
     }
 
+    function resetGameBoard() {
+      // Reset all inner cells
+      document.querySelectorAll(".inner-cell").forEach(cell => {
+        cell.textContent = "";
+        cell.classList.remove("won");
+      });
+
+      // Reset all inner boards
+      document.querySelectorAll(".inner-board").forEach(board => {
+        board.classList.remove("won");
+        board.removeAttribute("data-winner");
+      });
+
+      // Reset all outer cells
+      document.querySelectorAll(".outer-cell").forEach(cell => {
+        cell.removeAttribute("data-winner");
+      });
+
+      // Reset turn to Player 1
+      currentPlayer = "X";
+      playerTurn.textContent = "Player 1's turn";
+
+      // Re-enable click listeners
+      document.querySelectorAll(".inner-cell").forEach(cell => {
+        const newCell = cell.cloneNode(true);
+        cell.parentNode.replaceChild(newCell, cell);
+        newCell.addEventListener("click", () => {
+          if (newCell.textContent || newCell.parentElement.classList.contains("won")) return;
+          newCell.textContent = currentPlayer;
+          checkInnerBoardWin(newCell.parentElement);
+          currentPlayer = currentPlayer === "X" ? "O" : "X";
+          playerTurn.textContent = currentPlayer === "X" ? "Player 1's turn" : "Player 2's turn";
+          
+        });
+      });
+    }
+
+    // Modify checkOuterBoardWin to use resetGameBoard
     function checkOuterBoardWin() {
       const outerCells = document.querySelectorAll(".outer-cell");
       const combos = [
@@ -71,9 +111,15 @@ let currentPlayer = "X";
         const winC = outerCells[c].getAttribute("data-winner");
 
         if (winA && winA === winB && winA === winC) {
+          if(winA === "X") {
+            player1Score.textContent = parseInt(player1Score.textContent) + 1;
+          }
+          else{
+            player2Score.textContent = parseInt(player2Score.textContent) + 1;
+          }
           setTimeout(() => {
             alert(`Player ${winA} wins the game!`);
-            location.reload();
+            resetGameBoard();
           }, 100); // 100ms delay lets the DOM update first
         }
       }
